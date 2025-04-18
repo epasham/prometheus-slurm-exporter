@@ -41,18 +41,18 @@ func ParseAllocatedGPUs() float64 {
 	args := []string{"-a", "-X", "--format=AllocTRES", "--state=RUNNING", "--noheader", "--parsable2"}
 	output := string(Execute("sacct", args))
 	if len(output) > 0 {
-		for _, line := range strings.Split(output, "\n") {
-			if len(line) > 0 {
-				line = strings.Trim(line, "\"")
-        for _, resource := range strings.Split(line, ",") {
-          if strings.HasPrefix(resource, "gres/gpu=") {
-            descriptor := strings.TrimPrefix(resource, "gres/gpu=")
-				    job_gpus, _ := strconv.ParseFloat(descriptor, 64)
-				    num_gpus += job_gpus
+          for _, line := range strings.Split(output, "\n") {
+            if len(line) > 0 {
+              line = strings.Trim(line, "\"")
+              for _, resource := range strings.Split(line, ",") {
+                if strings.HasPrefix(resource, "gres/gpu=") {
+                  descriptor := strings.TrimPrefix(resource, "gres/gpu=")
+                  job_gpus, _ := strconv.ParseFloat(descriptor, 64)
+                  num_gpus += job_gpus
+                }  
+              }
+            }
           }
-        }
-			}
-		}
 	}
 
 	return num_gpus
