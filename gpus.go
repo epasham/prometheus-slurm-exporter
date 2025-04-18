@@ -69,7 +69,7 @@ func ParseTotalGPUs() float64 {
               line = strings.Trim(line, "\"")
               resource := strings.Fields(line)[1]
               if strings.HasPrefix(resource, "gpu:") {
-                descriptor := strings.Split(resource, ":")[1]
+                descriptor := strings.Split(resource, ":")[2]
                 descriptor = strings.Split(descriptor, "(")[0]
                 node_gpus, _ :=  strconv.ParseFloat(descriptor, 64)
                 num_gpus += node_gpus
