@@ -44,9 +44,13 @@ func ParseAllocatedGPUs() float64 {
 		for _, line := range strings.Split(output, "\n") {
 			if len(line) > 0 {
 				line = strings.Trim(line, "\"")
-				descriptor := strings.TrimPrefix(line, "gpu:")
-				job_gpus, _ := strconv.ParseFloat(descriptor, 64)
-				num_gpus += job_gpus
+        for _, resource := range strings.Split(line, ",") {
+          if strings.HasPrefix(resource, "gres/gpu=") {
+            descriptor := strings.TrimPrefix(resource, "gres/gpu=")
+				    job_gpus, _ := strconv.ParseFloat(descriptor, 64)
+				    num_gpus += job_gpus
+          }
+        }
 			}
 		}
 	}
