@@ -32,10 +32,10 @@ RUN set -ex; \
     && apt-get -y autoclean; apt-get -y autoremove; \
     rm -rf /var/lib/apt/lists/*
 
-COPY --from=build /go/bin/prometheus-slurm-exporter /bin/slurm_exporter
+COPY --from=build /go/bin/prometheus-slurm-exporter /bin/prometheus-slurm-exporter
 
 EXPOSE 8080
 USER   nobody
 # The Slurm and Munge files that need to be present at runtime
 #VOLUME /etc/slurm/slurm.conf /etc/munge/munge.key /run/munge/munge.socket.2
-ENTRYPOINT  ["/bin/slurm_exporter"]
+ENTRYPOINT  ["/bin/prometheus-slurm-exporter"]
